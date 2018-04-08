@@ -9,6 +9,9 @@ defmodule PingPong do
 
     pid = Node.spawn(:"note@192.168.25.17", pongfunc)
 
+    Process.sleep(5000)
+    IO.inspect(Process.alive?(pid), label: "remote alive?")
+
     IO.inspect(pid, label: "remote pid")
 
     time0 = NaiveDateTime.utc_now
