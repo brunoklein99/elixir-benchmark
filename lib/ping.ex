@@ -9,7 +9,9 @@ defmodule Ping do
   end
 
   defp start_internal(pid, msg_id, msg) do
+    IO.puts "sending #{msg_id}"
     send pid, {self(), msg_id, msg}
+    IO.puts "sent #{msg_id}"
     receive do
       {:ok, ^msg_id} -> IO.puts "received #{msg_id}"
     end

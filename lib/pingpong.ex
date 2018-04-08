@@ -2,14 +2,15 @@ defmodule PingPong do
 
   def start(size) do
 
-    true = Node.connect(:"note@192.168.25.60")
+    connect_status = Node.connect(:"note@192.168.25.60")
+    IO.inspect(connect_status, label: "connect_status")
 
-    # pid = Pong.start
     pongfunc = fn -> Pong.start end
 
     pid = Node.spawn(:"note@192.168.25.60", pongfunc)
 
-    # IO.inspect "Pong started with pid #{inspect(pid)}"
+    IO.inspect(pid, label: "remote pid")
+    
     time0 = NaiveDateTime.utc_now
     Task.async(fn -> Ping.start(pid, size) end)
     |> Task.await(:infinity)
