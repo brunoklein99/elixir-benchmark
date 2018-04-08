@@ -1,6 +1,7 @@
 defmodule Pong do
   def start do
-    spawn fn -> start_internal() end
+    start_internal()
+    #spawn fn -> start_internal() end
   end
 
   defp start_internal do
