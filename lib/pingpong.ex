@@ -9,8 +9,8 @@ defmodule PingPong do
 
     pid = Node.spawn(:"note@192.168.25.17", pongfunc)
 
-    Process.sleep(5000)
-    alive = Process.alive?(pid)
+    #Process.sleep(5000)
+    #alive = Process.alive?(pid)
     IO.inspect(alive, label: "remote alive?")
 
     IO.inspect(pid, label: "remote pid")
