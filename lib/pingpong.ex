@@ -2,11 +2,11 @@ defmodule PingPong do
 
   def start(size \\ 1) do
 
-    connect_status = Node.connect(:"note@192.168.25.17")
+    connect_status = Node.connect(:"note@192.168.25.60")
 
     IO.inspect(connect_status, label: "connect_status")
 
-    pid = Node.spawn(:"note@192.168.25.17", fn -> Pong.start end)
+    pid = Node.spawn(:"note@192.168.25.60", fn -> Pong.start end)
 
     IO.inspect(pid, label: "remote pid")
 
