@@ -26,7 +26,7 @@ defmodule PingPong do
     |> Task.await(:infinity)
     time1 = NaiveDateTime.diff(NaiveDateTime.utc_now, time0, :milliseconds)
     IO.puts "finished run #{count + 1}"
-    start_internal(msg, acc + time1, count + 1)
+    start_internal(pid, msg, acc + time1, count + 1)
 end
 
   def build_message(0) do
