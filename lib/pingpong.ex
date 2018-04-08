@@ -11,13 +11,23 @@ defmodule PingPong do
     IO.inspect(pid, label: "remote pid")
 
     msg = build_message(size)
+    elapsed = start_internal(pid, msg, 0, 0)
+
+    IO.puts "Elapsed #{elapsed}ms"
+  end
+
+  def start_internal(_msg, acc, 10) do
+    acc / 10
+  end
+
+  def start_internal(pid, msg, acc, count) do
     time0 = NaiveDateTime.utc_now
     Task.async(fn -> Ping.start(pid, msg) end)
     |> Task.await(:infinity)
     time1 = NaiveDateTime.diff(NaiveDateTime.utc_now, time0, :milliseconds)
-
-    IO.puts "Elapsed #{time1}s"
-  end
+    IO.puts "finished run #{count + 1}"
+    start_internal(msg, acc + time1, count + 1)
+end
 
   def build_message(0) do
     <<>>
