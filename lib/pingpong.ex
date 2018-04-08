@@ -11,7 +11,7 @@ defmodule PingPong do
 
     #Process.sleep(5000)
     #alive = Process.alive?(pid)
-    IO.inspect(alive, label: "remote alive?")
+    # IO.inspect(alive, label: "remote alive?")
 
     IO.inspect(pid, label: "remote pid")
 
