@@ -1,6 +1,6 @@
 defmodule PingPong do
 
-  def start(size) do
+  def start(size \\ 1) do
 
     connect_status = Node.connect(:"note@192.168.25.17")
     IO.inspect(connect_status, label: "connect_status")
@@ -10,7 +10,8 @@ defmodule PingPong do
     pid = Node.spawn(:"note@192.168.25.17", pongfunc)
 
     Process.sleep(5000)
-    IO.inspect(Process.alive?(pid), label: "remote alive?")
+    alive = Process.alive?(pid)
+    IO.inspect(alive, label: "remote alive?")
 
     IO.inspect(pid, label: "remote pid")
 
