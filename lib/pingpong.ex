@@ -16,7 +16,7 @@ defmodule PingPong do
     IO.puts "Elapsed #{elapsed}ms"
   end
 
-  def start_internal(_msg, acc, 10) do
+  def start_internal(_pid, _msg, acc, 10) do
     acc / 10
   end
 
