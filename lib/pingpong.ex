@@ -1,19 +1,37 @@
 defmodule PingPong do
 
-  def start(size \\ 1) do
+  def start_all do
+    tests = get_tests()
+    start_all(tests)
+  end
 
-    connect_status = Node.connect(:"note@192.168.25.60")
+  def start_all([h|t]) do
+    start(h)
+    start_all(t)
+  end
+
+  def start(size \\ 1) do
+    name = System.get_env("NODE_NAME")
+    IO.puts "Starting node #{name} for size #{size}"
+
+    name_atom = String.to_atom(name)
+
+    connect_status = Node.connect(name_atom)
 
     IO.inspect(connect_status, label: "connect_status")
 
-    pid = Node.spawn(:"note@192.168.25.60", fn -> Pong.start end)
+    pid = Node.spawn(name_atom, fn -> Pong.start end)
 
     IO.inspect(pid, label: "remote pid")
 
     msg = build_message(size)
     elapsed = start_internal(pid, msg, 0, 0)
 
-    IO.puts "Elapsed #{elapsed}ms"
+    IO.puts "Elapsed #{elapsed}ms for size #{size}"
+  end
+
+  def get_tests do
+    [10, 100, 1000, 10000, 100000, 250000, 500000, 1000000]
   end
 
   def start_internal(_pid, _msg, acc, 10) do
