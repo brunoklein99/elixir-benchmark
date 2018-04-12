@@ -5,6 +5,9 @@ defmodule PingPong do
     start_all(tests)
   end
 
+  def start_all([]) do
+  end
+
   def start_all([h|t]) do
     start(h)
     start_all(t)
