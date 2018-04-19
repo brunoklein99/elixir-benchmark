@@ -34,7 +34,7 @@ defmodule PingPong do
   end
 
   def get_tests do
-    [10, 100, 1000, 10000, 100000, 250000, 500000, 1000000]
+    [100]
   end
 
   def start_internal(_pid, _msg, acc, 10) do
