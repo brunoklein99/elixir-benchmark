@@ -43,7 +43,7 @@ defmodule PingPong do
 
   def start_internal(pid, msg, acc, count) do
     times =
-      1..25
+      1..100
       |> Enum.map(fn(_) -> Task.async(fn -> Ping.start(pid, msg) end) end)
       |> Enum.map(fn(task) -> Task.await(task, :infinity) end)
     time = Enum.sum(times) / Enum.count(times)
