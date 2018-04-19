@@ -42,11 +42,8 @@ defmodule PingPong do
   end
 
   def start_internal(pid, msg, acc, count) do
-    time0 = NaiveDateTime.utc_now
-    Task.async(fn -> Ping.start(pid, msg) end)
-    |> Task.await(:infinity)
-    time1 = NaiveDateTime.diff(NaiveDateTime.utc_now, time0, :milliseconds)
-    IO.puts "finished run #{count + 1}"
+    time1 = Task.async(fn -> Ping.start(pid, msg) end)
+      |> Task.await(:infinity)
     start_internal(pid, msg, acc + time1, count + 1)
 end
 
