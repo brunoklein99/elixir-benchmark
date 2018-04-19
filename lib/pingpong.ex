@@ -42,9 +42,12 @@ defmodule PingPong do
   end
 
   def start_internal(pid, msg, acc, count) do
-    time1 = Task.async(fn -> Ping.start(pid, msg) end)
-      |> Task.await(:infinity)
-    start_internal(pid, msg, acc + time1, count + 1)
+    times =
+      1..1000
+      |> Enum.map(fn(_) -> Task.async(fn -> Ping.start(pid, msg) end) end)
+      |> Enum.map(fn(task) -> Task.await(task, :infinity) end)
+    time = Enum.sum(times) / Enum.count(times)
+    start_internal(pid, msg, acc + time, count + 1)
 end
 
   def build_message(0) do
