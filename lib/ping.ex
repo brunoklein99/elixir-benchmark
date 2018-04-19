@@ -10,9 +10,10 @@ defmodule Ping do
   end
 
   defp start_internal(pid, msg_id, msg) do
-    send pid, {self(), msg_id, msg}
+    itself = self()
+    send pid, {itself, msg_id, msg}
     receive do
-      {:ok, ^msg_id} -> nil
+      {:ok, ^itself, ^msg_id} -> nil
     end
     start_internal(pid, msg_id + 1, msg)
   end
